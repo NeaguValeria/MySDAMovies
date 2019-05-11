@@ -4,16 +4,16 @@ import java.util.Scanner;
 public class MyMoviesCollection {
 
     public static final Integer DEFAULT_SEGMENT_SIZE = 16;
-    public Movie[] movies;
+    Movie[] movies;
 
     public int size;
 
-    public void readMoviesFromFile(String filePath){
+    public void readMoviesFromFile(String filePath) {
 
-        File file = new File (filePath);
-        try{
+        File file = new File(filePath);
+        try {
             Scanner scanner = new Scanner(file);
-            while (scanner.hasNextLine()){
+            while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 String[] split = line.split(",");
                 Movie movie = new Movie();
@@ -27,43 +27,80 @@ public class MyMoviesCollection {
 
                 add(movie);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public MyMoviesCollection(){
+    public MyMoviesCollection() {
         movies = new Movie[DEFAULT_SEGMENT_SIZE];
         size = 0;
     }
 
-    public void add(Movie movie){
+    public void add(Movie movie) {
         this.movies[size] = movie;
         size++;
     }
-    public void showMovies(){
+
+    public void showMovies() {
         for (int i = 0; i < size; i++) {
             System.out.println(movies[i]);
         }
     }
+
     /*
      * Bubble sort
      * */
-    public void sortMoviesByYear(){
-
+    public void sortMoviesByYear() {
+        boolean sorted = false;
+        while (!sorted) {
+            sorted = true;
+            for (int i = 0; i < movies.length - 1; i++) {
+                if (movies[i + 1] != null) {
+                    if (movies[i].year > movies[i + 1].year) {
+                        Movie aux = movies[i];
+                        movies[i] = movies[i + 1];
+                        movies[i + 1] = aux;
+                        sorted = false;  //se opreste
+                        System.out.println("switch " + movies[i] + " <-> " + movies[i + 1]);
+                    }
+                }
+            }
+            //ArrayUtils.show(a);
+        }
     }
 
     /*
      * Select sort
      * */
-    public void sortMoviesByDuration(){
+    public void sortMoviesByDuration() {
+        for (int i = 0; i < movies.length; i++) {
+            int minIndex = i;
 
+            for (int j = i; j < movies.length && movies[j] != null; j++) {
+                if (movies[j].duration < movies[minIndex].duration) {
+                    minIndex = j;
+                }
+            }
+            //inversare var
+            Movie aux = movies[i];
+            movies[i] = movies[minIndex];
+            movies[minIndex] = aux;
+        }
     }
 
     /*
      * Insert sort
      * */
-    public void sortMoviesByScore(){
-
+    public void sortMoviesByScore() {
+        for (int i = 1; i < movies.length && movies[i] != null; i++) {
+            Movie aux = movies[i];
+            int j = i -1;
+            while (j >= 0 && movies[j].score > aux.score) {
+                movies[j + 1] = movies[j];
+                j--;
+            }
+            movies[j + 1] = aux;
+        }
     }
 }

@@ -4,12 +4,15 @@ public class Main {
         String moviesPath = "movies.txt";
         MyMoviesCollection myMoviesCollection = new MyMoviesCollection();
         myMoviesCollection.readMoviesFromFile(moviesPath);
+        System.out.println(myMoviesCollection.movies.length);
         myMoviesCollection.showMovies();
         myMoviesCollection.sortMoviesByYear();
-        myMoviesCollection.showMovies();
-        myMoviesCollection.sortMoviesByScore();
+        System.out.println();
         myMoviesCollection.showMovies();
         myMoviesCollection.sortMoviesByDuration();
+        myMoviesCollection.showMovies();
+        System.out.println();
+        myMoviesCollection.sortMoviesByScore();
         myMoviesCollection.showMovies();
 
     }
